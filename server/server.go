@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"html/template"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -21,6 +22,7 @@ import (
 // Server defines the PasteServer
 type Server struct {
 	router *mux.Router
+	tpl *template.Template
 
 	cfg config.Config
 
@@ -28,13 +30,15 @@ type Server struct {
 	db *sqlx.DB
 }
 
-func New(cfgPath string) (*Server, error) {
-	c, err := config.LoadFromFile(cfgPath)
-
+func New() (*Server, error) {
+	c, err := config.Load()
+	if err != nil {
+		return nil, fmt.Errorf("couldn't load config: %w", err)
+	}
 
 	db, err := sqlx.Open("postgres", c.PostgresURI)
 	if err != nil {
-		return nil, fmt.Errorf("couldn't open postgresql: %v", err)
+		return nil, fmt.Errorf("couldn't open postgresql: %w", err)
 	}
 
 	if _, err := db.Exec(utils.CreatePastesTable); err != nil {
@@ -42,10 +46,9 @@ func New(cfgPath string) (*Server, error) {
 	}
 
 	s := &Server{
-		cfg: c,
-		db: db,
+		cfg: *c,
+		db:  db,
 	}
-	_ = db // ignore declared but not used
 	s.routes()
 
 	return s, nil
@@ -53,6 +56,10 @@ func New(cfgPath string) (*Server, error) {
 
 // Listen starts the HTTP server to handle requests
 func (s *Server) Listen() {
+	// routes.Templates = template.Must(template.New("T").Funcs(funcMap).ParseGlob("www/templates/*"))
+	s.tpl = template.Must(template.ParseGlob("www/**"))
+
+
 	srv := &http.Server{
 		Addr:         s.cfg.Listen,
 		WriteTimeout: time.Second * 10,

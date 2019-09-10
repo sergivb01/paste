@@ -1,0 +1,70 @@
+{{ define "head" }}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Paste</title>
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <style type="text/css">
+    body {
+        font-family: "IBM Plex Mono", sans-serif;
+    }
+
+    nav {
+        margin-bottom: 5vh;
+    }
+
+    footer {
+        margin-top: 15vh;
+    }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar is-link">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">Paste</a>
+            <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div id="navbarExampleTransparentExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/">Home</a>
+                <a class="navbar-item" href="/latests">Latests</a>
+                <a class="navbar-item" href="https://github.com/sergivb01/paste">Source</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {{ end }}
+        {{ define "tail" }}
+    </div>
+    <footer>
+        <div class="container hero-block">
+            <div class="columns">
+                <div class="column is-offset-one-quarter">
+                    <div class="footer-item-header">Paste</div>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="footer-item">New</a></li>
+                        <li><a href="/latests" class="footer-item">Latests</a></li>
+                        <li><a href="https://github.com/sergivb01/paste" class="footer-item">Source</a></li>
+                    </ul>
+                </div>
+            </div>
+            <p class="has-text-centered copyright has-text-grey">
+                <a href="https://sergivos.dev">Sergi Vos Bosch</a> &copy; 2019
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>
+{{ end }}

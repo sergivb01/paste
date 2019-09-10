@@ -1,13 +1,13 @@
 package utils
 
 import (
-	"time"
 	"database/sql/driver"
+	"time"
 )
 
 type NullTime struct {
 	Time  time.Time
-	Valid bool
+	Valid bool `json:"-"`
 }
 
 func (n *NullTime) Scan(value interface{}) error {

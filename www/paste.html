@@ -1,0 +1,23 @@
+{{ define "paste" }}
+{{ template "head" . }}
+<section class="hero is-primary">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">{{.Title}} <span class="tag is-link is-normal">{{ .ID }}</span></h1>
+            <h2 class="subtitle">
+                <ul>
+                    <li><b>Created:</b> {{.CreatedAt.Format "2006-01-02 15:04:05"}}</li>
+                    {{ if .ExpiresAt.Valid }}
+                    <li><b>Expires:</b> {{.ExpiresAt.Time.Format "2006-01-02 15:04:05"}}</li>
+                    {{ end }}
+                </ul>
+            </h2>
+        </div>
+    </div>
+</section>
+<hr>
+<pre>
+{{.Content}}
+</pre>
+{{ template "tail" . }}
+{{ end }}

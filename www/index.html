@@ -1,0 +1,55 @@
+{{ define "index" }}
+{{ template "head" . }}
+<div class="columns">
+    <div class="column is-four-fifths">
+		<form method="post" action="/">
+		    <div class="field">
+		        <label class="label">Name</label>
+		        <div class="control">
+		            <input class="input" type="text" placeholder="My code snippet" name="title">
+		        </div>
+		    </div>
+		    <div class="field">
+		        <label class="label">Message</label>
+		        <div class="control">
+		            <textarea class="textarea" placeholder="for _, key := range..." name="content"></textarea>
+		        </div>
+		    </div>
+		    <div class="field">
+		        <label class="label">Expires</label>
+		        <div class="control">
+		            <div class="select">
+		                <select name="expires">
+		                    <option>Never</option>
+		                    <option>5 minutes</option>
+		                    <option>1 hour</option>
+		                    <option>6 hours</option>
+		                    <option>1 day</option>
+		                    <option>1 week</option>
+		                    <option>2 weeks</option>
+		                    <option>1 month</option>
+		                </select>
+		            </div>
+		        </div>
+		    </div>
+		    <div class="control">
+		        <button class="button is-primary">Submit</button>
+		    </div>
+		</form>
+    </div>
+
+    <div class="column">
+        <nav class="panel">
+            <p class="panel-heading">
+                Latests Pastes
+            </p>
+            {{ range . }}
+            <a class="panel-block" href="/{{ .ID }}">{{ .Title }}</a>
+            {{ end }}
+        </nav>
+    </div>
+
+</div>
+
+{{ template "tail" . }}
+{{ end }}

@@ -1,30 +1,33 @@
 package config
 
 import (
-	"io/ioutil"
+	"os"
 
-	"gopkg.in/yaml.v2"
+	"github.com/joho/godotenv"
 )
 
 // config defines the configuration for the application
 type Config struct {
-	Listen string `yaml:"listen"`
-	
-	PostgresURI string `yaml:"postgresURI"`
+	Listen      string
+	PostgresURI string
 }
 
 // loadConfig loads the configuration from provied yml file path
-func LoadFromFile(path string) (Config, error) {
-	var c Config
-
-	b, err := ioutil.ReadFile(path)
-	if err != nil {
-		return c, err
+func Load() (*Config, error) {
+	if err := godotenv.Load(); err != nil {
+		return nil, err
 	}
 
-	if err := yaml.Unmarshal(b, &c); err != nil {
-		return c, err
+	return &Config{
+		Listen:      getEnv("LISTEN", ":8080"),
+		PostgresURI: getEnv("POSTGRES_URI", "none"),
+	}, nil
+}
+
+func getEnv(key string, defaultVal string) string {
+	if v, ok := os.LookupEnv(key); ok {
+		return v
 	}
 
-	return c, nil
+	return defaultVal
 }

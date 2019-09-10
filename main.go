@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	srv, err := server.New("./config.yml")
+	srv, err := server.New()
 	if err != nil {
 		panic(err)
 	}

@@ -1,0 +1,11 @@
+{{ define "last" }}
+
+{{ template "head" . }}
+  
+  {{ range . }}
+  	<h1>{{ .Title }}</h1>
+  {{ end }}
+
+{{ template "tail" . }}
+
+{{ end }}

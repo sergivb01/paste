@@ -1,0 +1,15 @@
+{{ define "latests" }}
+{{ template "head" . }}
+<ul>
+	{{ range . }}
+	<li>
+		<a href="/{{.ID}}">{{.ID}}</a> - {{ .Title }} 
+		({{.CreatedAt.Format "2006-01-02 15:04:05"}}) 
+		{{ if .ExpiresAt.Valid }}
+			<span class="tag is-danger"> {{.ExpiresAt.Time.Format "2006-01-02 15:04:05"}} </span>
+		{{ end }}
+		</li>
+	{{ end }}
+</ul>
+{{ template "tail" . }}
+{{ end }}
