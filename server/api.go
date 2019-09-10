@@ -39,11 +39,9 @@ func (s *Server) handleAPIPasteGET() http.HandlerFunc {
 			if err == errPasteNotFoundOrExpired {
 				code = http.StatusNotFound
 			}
-
 			s.handleError(err, code)(w, r)
 			return
 		}
-		fmt.Printf("found paste: %+v\n", paste)
 
 		w.Header().Set("Content-Type", "application/json")
 		if err := json.NewEncoder(w).Encode(paste); err != nil {
