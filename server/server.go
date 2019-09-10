@@ -54,7 +54,7 @@ func New(cfgPath string) (*Server, error) {
 // Listen starts the HTTP server to handle requests
 func (s *Server) Listen() {
 	srv := &http.Server{
-		Addr:         ":8080",
+		Addr:         s.cfg.Listen,
 		WriteTimeout: time.Second * 10,
 		ReadTimeout:  time.Second * 15,
 		IdleTimeout:  time.Second * 15,
@@ -63,7 +63,7 @@ func (s *Server) Listen() {
 
 	// Run our server in a goroutine so that it doesn't block.
 	go func() {
-		fmt.Printf("started listening on %s...\n", ":8080")
+		fmt.Printf("started listening on %s...\n", s.cfg.Listen)
 		if err := srv.ListenAndServe(); err != nil {
 			fmt.Println(err)
 		}
@@ -77,9 +77,11 @@ func (s *Server) Listen() {
 	// Block until we receive our signal.
 	<-c
 
-	// if err := s.db.Close(); err != nil {
-	// 	fmt.Printf("error closing db: %v", err)
-	// }
+	fmt.Println("closing http server and database...")
+
+	if err := s.db.Close(); err != nil {
+		fmt.Printf("error closing db: %v", err)
+	}
 
 	// Create a deadline to wait for.
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
