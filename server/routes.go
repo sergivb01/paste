@@ -121,7 +121,7 @@ func (s *Server) handlePastePOST() http.HandlerFunc {
 			rawExpires = r.FormValue("expires")
 		)
 
-		if len(title) >= 25 || len(title) == 0 || len(content) == 0 || len(content) >= 1024 || len(rawExpires) == 0 {
+		if len(title) >= 25 || len(title) == 0 || len(content) == 0 || len(rawExpires) == 0 {
 			s.handleError(errInvalidForm, http.StatusBadRequest)(w, r)
 			return
 		}
@@ -142,17 +142,6 @@ func (s *Server) handlePastePOST() http.HandlerFunc {
 				Valid: d != 0,
 			},
 		}
-
-		// if rawExpires != "" {
-		// 	t, err := time.Parse(time.RFC3339[:16], rawExpires)
-		// 	if err != nil {
-		// 		s.handleError(err, http.StatusBadRequest)(w, r)
-		// 		return
-		// 	}
-
-		// 	paste.ExpiresAt.Time = t
-		// 	paste.ExpiresAt.Valid = true
-		// }
 
 		if err := s.savePaste(paste); err != nil {
 			s.handleError(err, http.StatusInternalServerError)(w, r)
