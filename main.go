@@ -1,9 +1,13 @@
 package main
 
 import (
-	"fmt"
+	"github.com/sergivb01/paste/server"
 )
 
 func main() {
-	fmt.Printf("Hello, World!\n")
+	srv, err := server.New("./config.yml")
+	if err != nil {
+		panic(err)
+	}
+	srv.Listen()
 }

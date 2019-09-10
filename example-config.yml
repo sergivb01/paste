@@ -1,0 +1,2 @@
+listen: ":8080"
+postgresURI: "postgres://user:passwordy@host:port/table"
