@@ -37,6 +37,7 @@ func (s *Server) routes() {
 
 	r.HandleFunc("/{id}", s.handlePasteGET()).Methods("GET")
 	r.HandleFunc("/api/paste", s.handleAPIPasteGET()).Methods("GET")
+	r.HandleFunc("/api/paste", s.handleAPITestExpired()).Methods("DELETE")
 	r.HandleFunc("/api/paste", s.handleAPIPastePOST()).Methods("POST")
 
 	s.router = r

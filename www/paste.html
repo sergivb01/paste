@@ -1,6 +1,10 @@
 {{ define "paste" }}
 {{ template "head" . }}
-<section class="hero is-primary">
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
+
+<section class="hero is-info">
     <div class="hero-body">
         <div class="container">
             <h1 class="title">{{.Title}} <span class="tag is-link is-normal">{{ .ID }}</span></h1>
@@ -16,8 +20,11 @@
     </div>
 </section>
 <hr>
-<pre>
+<pre><code class="go">
 {{.Content}}
-</pre>
+</code></pre>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
 {{ template "tail" . }}
 {{ end }}

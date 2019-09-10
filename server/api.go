@@ -10,6 +10,21 @@ import (
 	"github.com/teris-io/shortid"
 )
 
+func (s *Server) handleAPITestExpired() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		ids, err := s.deleteExpiredPosts()
+		if err != nil {
+			s.handleError(err, http.StatusInternalServerError)(w, r)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		if err := json.NewEncoder(w).Encode(ids); err != nil {
+			s.handleError(err, http.StatusInternalServerError)(w, r)
+		}
+	}
+}
+
 func (s *Server) handleAPIPasteGET() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		rawID, ok := mux.Vars(r)["id"]

@@ -36,3 +36,13 @@ func (s *Server) getLatestPastes(max int) ([]Paste, error) {
 
 	return pastes, s.db.Select(&pastes, "SELECT * FROM pastes WHERE expires IS NULL OR expires > now() ORDER BY created DESC LIMIT $1", max)
 }
+
+func (s *Server) deleteExpiredPosts() ([]string, error) {
+	var ids []string
+
+	if err := s.db.Select(&ids, "DELETE FROM pastes WHERE expires < now() RETURNING id"); err != nil {
+		return nil, err
+	}
+
+	return ids, nil
+}
