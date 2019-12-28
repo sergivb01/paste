@@ -19,12 +19,12 @@ var (
 	customDurations = map[string]time.Duration{
 		"Never":     0,
 		"5 minutes": time.Minute * 5,
-		"1 hour": time.Hour,
-		"6 hours": time.Hour * 6,
-		"1 day": time.Hour * 24,
-		"1 week": time.Hour * 24 * 7,
-		"2 weeks": time.Hour * 24 * 14,
-		"1 month": time.Hour * 24 * 30,
+		"1 hour":    time.Hour,
+		"6 hours":   time.Hour * 6,
+		"1 day":     time.Hour * 24,
+		"1 week":    time.Hour * 24 * 7,
+		"2 weeks":   time.Hour * 24 * 14,
+		"1 month":   time.Hour * 24 * 30,
 	}
 )
 
@@ -84,7 +84,6 @@ func (s *Server) handlePasteGET() http.HandlerFunc {
 	}
 }
 
-
 func (s *Server) handleLatests() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		pastes, err := s.getLatestPastes(25)
@@ -139,7 +138,7 @@ func (s *Server) handlePastePOST() http.HandlerFunc {
 			Content:   content,
 			CreatedAt: time.Now(),
 			ExpiresAt: utils.NullTime{
-				Time: time.Now().Add(d),
+				Time:  time.Now().Add(d),
 				Valid: d != 0,
 			},
 		}

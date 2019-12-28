@@ -3,10 +3,10 @@ package server
 import (
 	"context"
 	"fmt"
+	"html/template"
 	"net/http"
 	"os"
 	"os/signal"
-	"html/template"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -22,7 +22,7 @@ import (
 // Server defines the PasteServer
 type Server struct {
 	router *mux.Router
-	tpl *template.Template
+	tpl    *template.Template
 
 	cfg config.Config
 
@@ -58,7 +58,6 @@ func New() (*Server, error) {
 func (s *Server) Listen() {
 	// routes.Templates = template.Must(template.New("T").Funcs(funcMap).ParseGlob("www/templates/*"))
 	s.tpl = template.Must(template.ParseGlob("www/**"))
-
 
 	srv := &http.Server{
 		Addr:         s.cfg.Listen,
